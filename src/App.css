@@ -1,0 +1,37 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.worker-image {
+  -webkit-mask-image: linear-gradient(to bottom,
+              #417ee0 80%,
+              transparent 100%);
+  mask-image: linear-gradient(to bottom,
+              #417ee0 80%,
+              transparent 100%);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.image {
+  position: absolute; /* Allows images to overlap */
+  opacity: 0; /* Start hidden */
+  transition: opacity 1s ease;
+}
+
+.image.visible {
+  opacity: 1; /* Show image */
+}
+
+
+
+
