@@ -38,7 +38,7 @@ const animationCart = () => {
 }
 
 
-  const headerTitles = ['home', 'popular', 'products', 'about us', 'contact', 'admin']
+  const headerTitles = ['Home', 'Popular', 'Products', 'About Us', 'Contact', 'Admin']
 
   const cartTotalQuantity = useSelector(state => state.cart.cartTotalQuantity);
 
@@ -75,13 +75,13 @@ const animationCart = () => {
               <a href="#" className='m-5 uppercase text-[20px] font-sans font-semibold text-[#fff]'>Starcoffe</a>
             </div>
             <div className='w-full h-full bg-[#353535]'>
-              <div className='flex flex-col justify-center items-center'>
+              <ul className='flex flex-col justify-center items-center'>
                 {
                   headerTitles.map((title, index)=>(
-                    <a href={title} key={index} className={`m-2 ${title === 'Home' ? 'uppercase bg-gradient-to-r from-[#57249b] to-[#417ee0] bg-clip-text text-transparent hover:text-[#fff] text-[15px] font-sans font-semibold cursor-pointer transition-all duration-500' : 'uppercase text-[#e6ece9] hover:text-[#fff] text-[15px] font-sans font-semibold cursor-pointer transition-all duration-500'}`}>{title}</a>
+                    <li key={index} className={`m-2 ${title === 'Home' ? 'uppercase bg-gradient-to-r from-[#57249b] to-[#417ee0] bg-clip-text text-transparent hover:text-[#fff] text-[15px] font-sans font-semibold cursor-pointer transition-all duration-500' : 'uppercase text-[#e6ece9] hover:text-[#fff] text-[15px] font-sans font-semibold cursor-pointer transition-all duration-500'}`}>{title}</li>
                   ))
                 }
-              </div>
+              </ul>
             </div>
           </div>
           <div className='max-md:hidden w-[80%] h-[50px] flex flex-row justify-between items-center'>
