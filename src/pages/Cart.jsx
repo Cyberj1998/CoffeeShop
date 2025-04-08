@@ -69,7 +69,7 @@ const Cart = () => {
           Total Products: {cartTotalQuantity} <br /> Total Money: ${cartTotalMoneyAmount}cup
         </h3>
         <div className='flex flex-row'>
-          <h3 className='text-white font-sans font-semibold m-2'>mesa -</h3>
+          <h3 className='text-white font-sans font-semibold m-2'>mesa - </h3>
           <select
             id="status"
             type='text'
@@ -88,7 +88,7 @@ const Cart = () => {
           </select>
         </div>
         <button 
-          onClick={insertOrder} 
+          onClick={()=>insertOrder()} 
           className='text-[#fff] bg-gradient-to-r from-[#57249b] to-[#417ee0] h-[40px] w-[100px] cursor-pointer'
         >
           Order
@@ -97,6 +97,8 @@ const Cart = () => {
     </div>
   )
 }
+
+
 
 
 
