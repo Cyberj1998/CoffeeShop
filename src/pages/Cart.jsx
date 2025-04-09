@@ -42,6 +42,7 @@ const Cart = () => {
     
     if (error) {
       console.error('Error inserting data:', error);
+      alert(`Error: ${error.message}`);
     } else {
       console.log('Data inserted successfully:', data);
       alert('Order Send Succefully')
