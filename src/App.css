@@ -33,5 +33,20 @@
 }
 
 
+/* For WebKit browsers */
+::-webkit-scrollbar {
+  width: 8px; /* Change width for vertical scrollbar */
+  height: 8px; /* Change height for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4a628b; /* Change color */
+  border-radius: 10px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-track {
+  background: #2c2c2c; /* Background of the track */
+}
+
 
 

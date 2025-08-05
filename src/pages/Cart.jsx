@@ -10,6 +10,7 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_UR;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_KEY;
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+
 const Cart = () => {
 
   const dispatch = useDispatch()
@@ -33,22 +34,27 @@ const Cart = () => {
 
   //--------------------------insert order function---------------
   const insertOrder = async () => {
-
+  try {
     const { data, error } = await supabase
       .from('orders')
       .insert([
         { products: cartJson, total: cartTotalMoneyAmount, mesa: table },
-      ]);
-    
+      ])
+      .select();
+
     if (error) {
-      console.error('Error inserting data:', error);
-      alert(`Error: ${error.message}`);
-    } else {
-      console.log('Data inserted successfully:', data);
-      alert('Order Send Succefully')
-      handleCleanCart()
+      throw error;
     }
+
+    alert('La orden fue enviada exitosamente');
+    handleCleanCart()
+    
+  } catch (err) {
+    alert(`Ocurrió un error al enviar la orden: ${err.message}`);
   }
+  };
+
+
 
 
   return (

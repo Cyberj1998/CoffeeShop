@@ -52,7 +52,7 @@ const Contact = () => {
   },[])
 
   return (
-    <section id='contact' className='h-[100vh] max-md:h-fit w-full bg-[#2c2c2c] flex flex-col justify-center items-center'>
+    <section id='Contact' className='h-[100vh] max-md:h-fit w-full bg-[#2c2c2c] flex flex-col justify-center items-center'>
       <div className='text-container w-full h-[30%] flex justify-center items-center'>
         <h3 className='uppercase text-[#fff] text-[100px] max-md:text-[70px] max-sm:text-[60px] font-sans font-semibold'>Contact us</h3>
       </div>

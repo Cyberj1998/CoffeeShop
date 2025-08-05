@@ -1,14 +1,11 @@
-import React from 'react'
 import Ice from '../assets/ice-img.png'
-import Leaf from '../assets/leaf-img.png'
-import BlueBerry from '../assets/BlueBerries.png'
 import Seal from '../assets/home-sticker.svg'
 import { FaShoppingCart } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice'
 
 
-const PopularProductCard = ({ name, price, status, image, description, id, product }) => {
+const PopularProductCard = ({ name, price, image, description, id, product }) => {
 
   const dispatch = useDispatch()
 
@@ -18,13 +15,13 @@ const PopularProductCard = ({ name, price, status, image, description, id, produ
 
 
   return (
-      <div className={`group bg-transparent border border-white rounded-2xl h-[330px] w-[230px] m-2 flex flex-col justify-center items-center ${id === 1 ? '-mt-[20px]' : ''}`}>
-        {id === 1 ? (
-          <img src={Seal} alt="seal" className='h-[80px] z-10 -mt-[350px] max-md:h-[60px] absolute' />
+      <div className={`group relative bg-transparent border border-white rounded-2xl h-[450px] w-[230px] m-2 flex flex-col justify-center items-center ${id === 2 ? '-mt-[20px]' : ''}`}>
+        {id === 2 ? (
+          <img src={Seal} alt="seal" className='h-[80px] z-10 -mt-[365px] max-md:h-[60px] absolute' />
         ) : (
           ''
         )}
-        <div className='image-container w-full h-[70%] flex flex-col justify-center items-center'>
+        <div className='image-container relative w-full h-[70%] flex flex-col justify-center items-center'>
           <div className='green-shape-product bg-gradient-to-r from-[#57249b] to-[#417ee0] w-[80%] h-[80px] rounded-bl-full rounded-br-full relative mt-[6rem] z-1' />
           <img 
             src={image} 
@@ -34,7 +31,7 @@ const PopularProductCard = ({ name, price, status, image, description, id, produ
           <img 
             src={Ice} 
             alt="ice" 
-            className='h-[40px] z-3 absolute ml-[5rem] rotate-50 transition-transform duration-200 group-hover:translate-y-[-5px]' 
+            className='h-[40px] z-3 absolute ml-[4rem] rotate-50 transition-transform duration-200 group-hover:translate-y-[-5px]' 
           />
           <img 
             src={Ice} 

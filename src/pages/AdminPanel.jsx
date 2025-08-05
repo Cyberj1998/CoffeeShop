@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import  { useEffect, useState } from 'react';
 import { products } from '../store'
 import ProductCardAdmin from '../components/ProductCardAdmin'
 import OrderCard from '../components/OrderCard';
@@ -35,7 +35,8 @@ const AdminPanel = () => {
   const[description,setDescription]=useState('')
   const[price,setPrice]=useState(null)
   const[status,setStatus]=useState('')
-  const[img,setImg]=useState('')
+  const[img,setImg]=useState(null)
+  const[imgUrl,setImgUrl]=useState('')
 
   //------------------Handle Menu Function---------------------
 
@@ -66,6 +67,98 @@ const AdminPanel = () => {
       localStorage.setItem('supabase_token', token);
     }
   };
+  //-------------------Insert Image Function------------------------------
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; 
+    if (file) {
+        setImg(file); 
+    }
+  };
+
+  const insertImage = async (file) => {
+
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError) {
+        console.error('Error fetching session:', sessionError.message);
+        return; 
+    }
+
+    if (!session) {
+        console.error('User not authenticated. Please log in to insert data.');
+        return; 
+    }
+
+    console.log(file)
+    const { data, error } = await supabase.storage
+      .from('images') 
+      .upload(file);
+
+    if (error) {
+      console.error('Error uploading image:', error.message);
+      return null; 
+    }
+
+    const url = `${supabaseUrl}/storage/v1/object/public/images/${data.path}`;
+    setImgUrl(url)
+  }
+
+  async function uploadImage(file) {
+    try {
+      const { data, error } = await supabase.storage.from('images').upload(`product_${Date.now()}.png`, file);
+  
+      if (error) {
+        console.error('Error uploading file:', error);
+        throw error;
+      }
+  
+      console.log('File uploaded successfully:', data);
+      
+      // Construct the initial URL
+      const imgUrl = `${supabaseUrl}/storage/v1/object/public/${data.Key}`;
+      
+      // Wait for the file to be accessible
+      let fileAvailable = false;
+      let attempts = 0;
+      const maxAttempts = 10; // Try 10 times
+      const waitTime = 1000; // Wait for 1 second between attempts
+  
+      while (!fileAvailable && attempts < maxAttempts) {
+        try {
+          const response = await fetch(imgUrl); // Attempt to fetch the file
+          
+          // If fetch is successful, file is available
+          if (response.ok) {
+            fileAvailable = true;
+            console.log('File is accessible:', imgUrl);
+          } else {
+            // If not available yet, wait and increment attempts
+            console.log('File not yet available, retrying...');
+            await new Promise(resolve => setTimeout(resolve, waitTime));
+            attempts++;
+          }
+        } catch (err) {
+          console.error('Error while checking file availability:', err);
+          break;
+        }
+      }
+  
+      if (!fileAvailable) {
+        console.error('File was not available after several attempts:', imgUrl);
+        return null; // or handle as necessary
+      }
+  
+      setImgUrl(imgUrl);
+      return imgUrl;
+  
+    } catch (error) {
+      console.error('Error in uploadImage:', error);
+    }
+  }
+  
+  
+
+
   //----------------InsertRow Function----------------------------------------
   const InsertData = async (name, description, price, status, img) => {
  
@@ -81,26 +174,26 @@ const AdminPanel = () => {
         return; 
     }
 
-
     const { data, error } = await supabase
-        .from('cafeteria')
-        .insert([
-            { name: name, description: description, price: price, status: status, img: img },
-        ]);
+      .from('cafeteria')
+      .insert([
+        { name: name, description: description, price: price, status: status, img: img },
+      ]);
 
     if (error) {
-        console.error('Error inserting data:', error.message);
+      console.error('Error inserting data:', error.message);
     } else {
-        console.log('Data inserted successfully:', data);
+      console.log('Data inserted successfully:', data);
     }
   }
   
   //cyberjay826@gmail.com
   //------------------FormLogic---------------------------------------
-  const handleSubmitNewRow = (e) => {
-    e.preventDefault()
 
-    InsertData(name, description, price, status, img )
+  const handleSubmitNewRow = async (e) => {
+    e.preventDefault();
+    await uploadImage(img);
+    InsertData(name, description, price, status, imgUrl);
   }
 
   //-------------------FetchDataFunction---------------------------------
@@ -206,12 +299,6 @@ const AdminPanel = () => {
                   <ProductCardAdmin
                     product={product}
                     key={product.id}
-                    id={product.id}
-                    name={product.name}
-                    description={product.description}
-                    price={product.price}
-                    status={product.status}
-                    image={product.img}
                   />
                 ))}
                 <button className='cursor-pointer w-full bg-[#288e64] cursor- text-[#fff] font-sans font-semibold' onClick={fetchData}>Refresh</button>
@@ -238,12 +325,13 @@ const AdminPanel = () => {
                           Precio
                       </label>
                       <input
-                          id="price"
-                          type="number"
-                          onChange={(e) => setPrice(e.target.value)}
-                          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                          placeholder="Ingresa el precio"
-                          required
+                        id="price"
+                        type="number"
+                        step="any" 
+                        onChange={(e) => setPrice(parseFloat(e.target.value) || 0)} 
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Ingresa el precio"
+                        required
                       />
                   </div>
 
@@ -257,7 +345,6 @@ const AdminPanel = () => {
                           onChange={(e) => setDescription(e.target.value)}
                           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           placeholder="Ingresa la descripción"
-                          required
                       ></textarea>
                   </div>
 
@@ -282,11 +369,11 @@ const AdminPanel = () => {
                           Imagen
                       </label>
                       <input
-                          id="image"
-                          type="text"
-                          onChange={(e) => setImg(e.target.value)}
-                          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                          required
+                        id="image"
+                        type="file"
+                        onChange={handleImageChange}
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required
                       />
                   </div>
 

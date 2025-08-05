@@ -60,7 +60,7 @@ const AboutUs = () => {
   }, []);
 
   return (
-    <section id='about' className='about-us-section bg-[#151515] h-[100vh] w-full flex flex-row max-md:flex-col justify-center items-center'> 
+    <section id='About' className='about-us-section bg-[#151515] h-[100vh] w-full flex flex-row max-md:flex-col justify-center items-center'> 
       
       <div className='h-full w-[50%] max-md:w-full max-md:h-[50%] flex flex-col justify-center items-start max-md:items-center'>
         <h3 className='text-[#fff] font-sans font-semibold text-[55px] uppercase m-5 max-md:text-[30px]'>Lear More <br /> <span className='bg-gradient-to-r from-[#57249b] to-[#417ee0] bg-clip-text text-transparent'>About</span> Us</h3>

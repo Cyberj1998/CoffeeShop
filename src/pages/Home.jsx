@@ -50,10 +50,8 @@ const Home = () => {
   }, [newMovileMenuState]);
   
 
-
-
   return (
-    <section id='store' className='bg-[#151515] h-[100vh] w-full flex justify-center items-center flex-col overflow-hidden'>
+    <section id='Home' className='bg-[#151515] h-[100vh] w-full flex justify-center items-center flex-col overflow-hidden'>
       <h2 className='coffee-text text-[#fff] text-[115px] font-bold font-sans w-full h-[30%] opacity-0 max-md:text-[80px] max-sm:text-[60px]'>C<span className='bg-gradient-to-r from-[#57249b] to-[#417ee0] bg-clip-text text-transparent'>o</span>ld c<span className='bg-gradient-to-r from-[#57249b] to-[#417ee0] bg-clip-text text-transparent'>o</span>ffee</h2>
       <div className='absolute-container w-full h-[70%] flex flex-row justify-center items-center max-md:flex-col'>
         <div className='hero-text-container h-full w-[33%] flex flex-col justify-center items-start max-md:w-full max-md:h-[50%] max-md:items-center'>

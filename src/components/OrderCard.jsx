@@ -34,23 +34,33 @@ const OrderCard = ({ order }) => {
     }
   }
 
-  return (
-    <div className='w-[80%] h-fit flex flex-row bg-gradient-to-r from-green-500 to-green-300 m-2 justify-between'>
-      <div className='w-fit flex flex-col items-start text-black text-[20px] font-sans font-semibold p-[5px]'>
-        <p>{`mesa - ${order.mesa}`}</p>
-        {Array.isArray(order.products) && order.products.map((product, index) => (
-          <span key={index}>{`${product.name} - ${product.quantity} - $${product.price}`}<br /></span>
-        ))}
-        <h2>total: ${order.total}</h2>
-      </div>
-      <button
-        onClick={()=>handleDeleteOrder(order.id)} 
-        className='text-red-500 font-sans font-semibold text-[20px] m-[10px] border-[2px] border-red-500 rounded-full h-[50px] w-[50px] cursor-pointer'
-      >
-        X
-      </button>
+// Dentro del componente o justo antes de renderizar:
+const productsArray = typeof order.products === 'string' ? JSON.parse(order.products) : order.products;
+
+return (
+  <div className="w-[80%] bg-white shadow-lg rounded-lg p-6 m-4 flex justify-between items-center">
+    <div className="flex flex-col space-y-2 text-gray-800">
+      <p className="text-xl font-semibold">Mesa - {order.mesa}</p>
+      {Array.isArray(productsArray) ? (
+        productsArray.map((product, index) => (
+          <span key={index} className="text-gray-600">
+            {product.name} &times; {product.quantity} &mdash; ${product.price.toFixed(2)}
+          </span>
+        ))
+      ) : (
+        <p className="italic text-red-500">Productos no disponibles</p>
+      )}
+      <h2 className="mt-2 font-bold text-lg text-green-600">Total: ${order.total.toFixed(2)}</h2>
     </div>
-  )
+    <button
+      onClick={() => handleDeleteOrder(order.id)}
+      className="text-white bg-red-500 hover:bg-red-600 transition cursor-pointer rounded-full h-12 w-12 flex items-center justify-center shadow-md"
+      aria-label="Eliminar orden"
+    >
+      &#10005;
+    </button>
+  </div>
+)
 }
 
 

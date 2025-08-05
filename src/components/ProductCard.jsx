@@ -18,7 +18,7 @@ const ProductCard = ({ name, price, status, image, product }) => {
   };
 
   return (
-    <div className='group bg-[#151515] border border-[#57249b] from-[#57249b] to-[#417ee0] rounded-2xl h-[330px] w-[230px] m-2 flex flex-col justify-center items-center'>
+    <div className='group bg-[#151515] border border-[#57249b] from-[#57249b] to-[#417ee0] rounded-2xl h-[330px] w-[250px] m-2 flex flex-col justify-center items-center'>
       <div className='image-container w-full h-[70%] flex flex-col justify-center items-center'>
         <div className='green-shape-product bg-gradient-to-r from-[#57249b] to-[#417ee0] w-[80%] h-[80px] rounded-bl-full rounded-br-full relative mt-[6rem] z-1' />
         <img src={image} alt="coffee-image" className='h-[190px] w-[100px] absolute z-2' />
